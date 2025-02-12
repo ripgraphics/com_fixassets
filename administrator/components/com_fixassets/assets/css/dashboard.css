@@ -1,0 +1,82 @@
+/* Hide Joomla admin sidebar */
+body.com_fixassets #subhead-container,
+body.com_fixassets #sidebar-wrapper {
+    display: none !important;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+    width: 100%;
+    padding: 20px;
+}
+
+/* Header Styles */
+.dashboard-header {
+    background: #2a69b8;
+    color: white;
+    padding: 15px 20px;
+    margin: -20px -20px 20px -20px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    margin-left: 15px;
+}
+
+#sidebarToggle {
+    color: white;
+    font-size: 1.5rem;
+    padding: 0;
+}
+
+/* Card Styles */
+.border-left-primary {
+    border-left: .25rem solid #4e73df!important;
+}
+
+.border-left-success {
+    border-left: .25rem solid #1cc88a!important;
+}
+
+.border-left-info {
+    border-left: .25rem solid #36b9cc!important;
+}
+
+.border-left-warning {
+    border-left: .25rem solid #f6c23e!important;
+}
+
+.card {
+    transition: transform .2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    content: "";
+}
+
+/* Main Content Area */
+.dashboard-body {
+    margin-top: 20px;
+}
+
+/* Remove any extra padding from Joomla admin template */
+body.com_fixassets .wrapper {
+    padding: 0 !important;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" method="upgrade">
+    <name>COM_FIXASSETS</name>
+    <version>1.0.3</version>
+    <creationDate>02-24-2025</creationDate>
+    <author>RIP Graphics</author>
+    <authorEmail>info@ripgraphics.com</authorEmail>
+    <authorUrl>https://ripgraphics.com</authorUrl>
+    <copyright>Copyright (C) 2023 RIP Graphics. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <description>COM_FIXASSETS_DESC</description>
+
+    <administration>
+        <menu img="puzzle">COM_FIXASSETS</menu>
+        <files folder="administrator/components/com_fixassets">
+            <filename>fixassets.php</filename>
+            <filename>controller.php</filename>
+            <folder>controllers</folder>
+            <folder>models</folder>
+            <folder>views</folder>
+            <folder>assets</folder>
+        </files>
+        <languages folder="administrator">
+            <language tag="en-GB">language/en-GB/en-GB.com_fixassets.ini</language>
+            <language tag="en-GB">language/en-GB/en-GB.com_fixassets.sys.ini</language>
+        </languages>
+    </administration>
+</extension>

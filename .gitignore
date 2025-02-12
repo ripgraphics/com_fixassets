@@ -1,3 +1,14 @@
+# Joomla System Files
+.DS_Store
+.idea/
+.vscode/
+*.log
+*.bak
+*.tmp
+
+# Configuration Files
+configuration.php
+
 /.htaccess
 /administrator/cache/*
 /administrator/components/com_actionlogs/*
