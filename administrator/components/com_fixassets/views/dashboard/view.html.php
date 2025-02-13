@@ -8,31 +8,67 @@ use Joomla\CMS\Factory;
 
 class FixassetsViewDashboard extends HtmlView
 {
-    protected $missingAssetsCount;
-    
+    /**
+     * The items to display
+     *
+     * @var  array
+     */
+    protected $items;
+
+    /**
+     * The pagination object
+     *
+     * @var  \Joomla\CMS\Pagination\Pagination
+     */
+    protected $pagination;
+
+    /**
+     * The model state
+     *
+     * @var  \Joomla\CMS\Object\CMSObject
+     */
+    protected $state;
+
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  The name of the template file to parse
+     *
+     * @return  void
+     */
     public function display($tpl = null)
     {
-        // Add custom body class
-        Factory::getApplication()->getDocument()->addCustomTag('
-            <script>
-                document.body.classList.add("com_fixassets");
-            </script>
-        ');
+        // Get data from the model
+        $this->items = $this->get('Items');
+        $this->pagination = $this->get('Pagination');
+        $this->state = $this->get('State');
 
-        $model = $this->getModel();
-        $this->missingAssetsCount = [
-            'articles' => $model->getMissingAssetsCount('articles'),
-            'categories' => $model->getMissingAssetsCount('categories'),
-            'modules' => $model->getMissingAssetsCount('modules'),
-            'plugins' => $model->getMissingAssetsCount('plugins')
-        ];
+        // Check for errors
+        if (count($errors = $this->get('Errors')))
+        {
+            throw new \Exception(implode("\n", $errors), 500);
+        }
 
+        // Add the toolbar
         $this->addToolbar();
+
+        // Display the template
         parent::display($tpl);
     }
 
+    /**
+     * Add the page title and toolbar
+     *
+     * @return  void
+     */
     protected function addToolbar()
     {
-        ToolbarHelper::title(Text::_('COM_FIXASSETS_DASHBOARD'), 'puzzle');
+        ToolbarHelper::title(Text::_('COM_FIXASSETS'), 'puzzle');
+
+        // Add toolbar buttons
+        if (Factory::getUser()->authorise('core.admin', 'com_fixassets'))
+        {
+            ToolbarHelper::preferences('com_fixassets');
+        }
     }
 }

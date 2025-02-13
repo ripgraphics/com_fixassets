@@ -2,83 +2,61 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\HTML\HTMLHelper;
 
-HTMLHelper::_('behavior.multiselect');
-HTMLHelper::_('formbehavior.chosen', 'select');
+// Load required CSS and JavaScript
+HTMLHelper::_('bootstrap.framework');
+HTMLHelper::_('stylesheet', 'administrator/components/com_fixassets/assets/css/dashboard.css');
+HTMLHelper::_('script', 'administrator/components/com_fixassets/assets/js/dashboard.js');
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_fixassets'); ?>" method="post" name="adminForm" id="adminForm">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label><?php echo Text::_('COM_FIXASSETS_SELECT_TYPE'); ?></label>
-                                <select name="filter[type]" class="form-control" onchange="this.form.submit()">
-                                    <option value=""><?php echo Text::_('COM_FIXASSETS_SELECT_TYPE_OPTION'); ?></option>
-                                    <option value="articles" <?php echo ($this->state->get('filter.type') == 'articles' ? 'selected' : ''); ?>>
-                                        <?php echo Text::_('COM_FIXASSETS_ARTICLES'); ?>
-                                    </option>
-                                    <option value="categories" <?php echo ($this->state->get('filter.type') == 'categories' ? 'selected' : ''); ?>>
-                                        <?php echo Text::_('COM_FIXASSETS_CATEGORIES'); ?>
-                                    </option>
-                                    <option value="modules" <?php echo ($this->state->get('filter.type') == 'modules' ? 'selected' : ''); ?>>
-                                        <?php echo Text::_('COM_FIXASSETS_MODULES'); ?>
-                                    </option>
-                                    <option value="plugins" <?php echo ($this->state->get('filter.type') == 'plugins' ? 'selected' : ''); ?>>
-                                        <?php echo Text::_('COM_FIXASSETS_PLUGINS'); ?>
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+<div class="dashboard-container">
+    <!-- Include Sidebar -->
+    <?php include_once JPATH_COMPONENT_ADMINISTRATOR . '/views/dashboard/tmpl/sidebar.php'; ?>
 
-                    <?php if (!empty($this->items)) : ?>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th width="1%" class="center">
-                                        <?php echo HTMLHelper::_('grid.checkall'); ?>
-                                    </th>
-                                    <th>
-                                        <?php echo Text::_('JGLOBAL_TITLE'); ?>
-                                    </th>
-                                    <th width="1%" class="nowrap center">
-                                        <?php echo Text::_('JGRID_HEADING_ID'); ?>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($this->items as $i => $item) : ?>
-                                    <tr>
-                                        <td class="center">
-                                            <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $this->escape($item->title); ?>
-                                        </td>
-                                        <td class="center">
-                                            <?php echo (int) $item->id; ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php else : ?>
-                        <div class="alert alert-info">
-                            <?php echo Text::_('COM_FIXASSETS_NO_ITEMS_FOUND'); ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
+    <!-- Content -->
+    <div class="dashboard-content">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="header-left">
+                <button id="sidebarToggle" class="btn btn-link">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1><?php echo Text::_('COM_FIXASSETS_TITLE'); ?></h1>
+            </div>
+            <div class="header-right">
+                <a href="<?php echo Route::_('index.php'); ?>" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i>
+                    <?php echo Text::_('COM_FIXASSETS_BACK_TO_ADMIN'); ?>
+                </a>
             </div>
         </div>
-    </div>
 
-    <input type="hidden" name="task" value="">
-    <input type="hidden" name="boxchecked" value="0">
-    <?php echo HTMLHelper::_('form.token'); ?>
-</form>
+        <div class="dashboard-body">
+            <!-- Load the specific view content -->
+            <?php echo $this->loadTemplate('items'); ?>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const dashboardContent = document.querySelector('.dashboard-content');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('sidebar-closed');
+            dashboardContent.classList.toggle('content-expanded');
+        }
+
+        sidebar.classList.remove('sidebar-closed');
+        dashboardContent.classList.add('content-expanded');
+
+        sidebarToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleSidebar();
+        });
+    });
+</script>

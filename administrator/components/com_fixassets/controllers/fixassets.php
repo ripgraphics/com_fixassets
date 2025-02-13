@@ -13,6 +13,21 @@ class FixassetsControllerFixassets extends AdminController
         return parent::getModel($name, $prefix, $config);
     }
 
+    public function display($cachable = false, $urlparams = array())
+    {
+        $view = $this->input->get('view', 'fixassets');
+        $layout = $this->input->get('layout', 'default');
+        $id = $this->input->getInt('id');
+
+        // Check for items view
+        if ($view === 'items')
+        {
+            $this->input->set('view', 'items');
+        }
+
+        return parent::display($cachable, $urlparams);
+    }
+
     public function fixmissingassets()
     {
         // Check for request forgeries

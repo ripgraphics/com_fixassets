@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <fieldset
+        name="permissions"
+        label="JCONFIG_PERMISSIONS_LABEL"
+        description="JCONFIG_PERMISSIONS_DESC">
+        <field
+            name="rules"
+            type="rules"
+            label="JCONFIG_PERMISSIONS_LABEL"
+            class="inputbox"
+            validate="rules"
+            filter="rules"
+            component="com_fixassets"
+            section="component" />
+    </fieldset>
+    
+    <fieldset name="component"
+        label="COM_FIXASSETS_CONFIG_GENERAL_LABEL"
+        description="COM_FIXASSETS_CONFIG_GENERAL_DESC">
+        
+        <field
+            name="show_category"
+            type="radio"
+            label="COM_FIXASSETS_CONFIG_SHOW_CATEGORY_LABEL"
+            description="COM_FIXASSETS_CONFIG_SHOW_CATEGORY_DESC"
+            default="1"
+            class="btn-group btn-group-yesno">
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>
+
+        <field
+            name="list_limit"
+            type="integer"
+            label="COM_FIXASSETS_CONFIG_LIST_LIMIT_LABEL"
+            description="COM_FIXASSETS_CONFIG_LIST_LIMIT_DESC"
+            default="20"
+            first="5"
+            last="50"
+            step="5"
+        />
+    </fieldset>
+</config>

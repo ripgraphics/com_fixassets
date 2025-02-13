@@ -10,15 +10,14 @@ if (!Factory::getUser()->authorise('core.manage', 'com_fixassets')) {
     throw new InvalidArgumentException(Text::_('JERROR_ALERTNOAUTHOR'), 404);
 }
 
-// Get an instance of the controller
-$controller = BaseController::getInstance('FixAssets', ['base_path' => JPATH_COMPONENT_ADMINISTRATOR]);
+// Register helper file
+JLoader::register('FixassetsHelper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/fixassets.php');
 
-// Force the dashboard view as default
-$input = Factory::getApplication()->input;
-if ($input->get('view') === null) {
-    $input->set('view', 'dashboard');
-}
+// Get an instance of the controller
+$controller = BaseController::getInstance('Fixassets');
 
 // Execute the task
-$controller->execute($input->get('task', 'display'));
+$controller->execute(Factory::getApplication()->input->get('task', 'display'));
+
+// Redirect if set by the controller
 $controller->redirect();
