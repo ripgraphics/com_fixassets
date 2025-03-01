@@ -32,9 +32,17 @@ if (!$app->getIdentity()->authorise('core.manage', 'com_fixassets')) {
 // Get the document object
 $wa = $app->getDocument()->getWebAssetManager();
 
-// Load required assets
-$wa->useScript('bootstrap.framework');
+// Load required assets - using correct Joomla 5.x asset identifiers
+$wa->usePreset('bootstrap.framework'); // Use the correct preset name for Bootstrap in Joomla 5.x
 $wa->useScript('core');
+
+// Register and use component assets if they exist
+if (file_exists(JPATH_ROOT . '/media/com_fixassets/js/admin.js')) {
+    $wa->registerAndUseScript('com_fixassets.admin', 'com_fixassets/js/admin.js', [], ['defer' => true]);
+}
+if (file_exists(JPATH_ROOT . '/media/com_fixassets/css/admin.css')) {
+    $wa->registerAndUseStyle('com_fixassets.admin', 'com_fixassets/css/admin.css');
+}
 
 try {
     // Initialize the controller
