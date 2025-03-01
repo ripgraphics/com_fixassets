@@ -1,0 +1,39 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "com_fixassets",
+    "version": "1.0.0",
+    "description": "Fix Assets Component",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "com_fixassets.dashboard-css",
+            "type": "style",
+            "uri": "com_fixassets/css/dashboard.css",
+            "dependencies": []
+        },
+        {
+            "name": "com_fixassets.dashboard-js",
+            "type": "script",
+            "uri": "com_fixassets/js/dashboard.js",
+            "dependencies": ["core"],
+            "attributes": {
+                "defer": true
+            }
+        },
+        {
+            "name": "com_fixassets.admin-css",
+            "type": "style",
+            "uri": "com_fixassets/css/admin.css",
+            "dependencies": []
+        },
+        {
+            "name": "com_fixassets.admin-js",
+            "type": "script",
+            "uri": "com_fixassets/js/admin.js",
+            "dependencies": ["core"],
+            "attributes": {
+                "defer": true
+            }
+        }
+    ]
+}

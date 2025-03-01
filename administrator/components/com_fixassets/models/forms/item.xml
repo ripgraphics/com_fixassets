@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="basic">
+        <field
+            name="title"
+            type="text"
+            label="COM_FIXASSETS_ITEM_TITLE"
+            description="COM_FIXASSETS_ITEM_TITLE_DESC"
+            required="true"
+        />
+        <field
+            name="description"
+            type="editor"
+            label="COM_FIXASSETS_ITEM_DESCRIPTION"
+            description="COM_FIXASSETS_ITEM_DESCRIPTION_DESC"
+        />
+        <field
+            name="state"
+            type="list"
+            label="COM_FIXASSETS_ITEM_STATE"
+            description="COM_FIXASSETS_ITEM_STATE_DESC"
+            default="1"
+        >
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+        </field>
+    </fieldset>
+    <fieldset name="metadata">
+        <field
+            name="created"
+            type="calendar"
+            label="COM_FIXASSETS_ITEM_CREATED"
+            description="COM_FIXASSETS_ITEM_CREATED_DESC"
+            readonly="true"
+        />
+        <field
+            name="created_by"
+            type="user"
+            label="COM_FIXASSETS_ITEM_CREATED_BY"
+            description="COM_FIXASSETS_ITEM_CREATED_BY_DESC"
+            readonly="true"
+        />
+        <field
+            name="modified"
+            type="calendar"
+            label="COM_FIXASSETS_ITEM_MODIFIED"
+            description="COM_FIXASSETS_ITEM_MODIFIED_DESC"
+            readonly="true"
+        />
+        <field
+            name="modified_by"
+            type="user"
+            label="COM_FIXASSETS_ITEM_MODIFIED_BY"
+            description="COM_FIXASSETS_ITEM_MODIFIED_BY_DESC"
+            readonly="true"
+        />
+    </fieldset>
+</form>

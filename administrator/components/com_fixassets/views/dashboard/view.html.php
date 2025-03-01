@@ -1,32 +1,30 @@
 <?php
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_fixassets
+ *
+ * @copyright   Copyright (C) 2023 RIP Graphics. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+namespace RipGraphics\Component\Fixassets\Administrator\View\Dashboard;
+
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 
-class FixassetsViewDashboard extends HtmlView
+/**
+ * Dashboard View
+ */
+class HtmlView extends BaseHtmlView
 {
-    /**
-     * The items to display
-     *
-     * @var  array
-     */
-    protected $items;
-
-    /**
-     * The pagination object
-     *
-     * @var  \Joomla\CMS\Pagination\Pagination
-     */
-    protected $pagination;
-
     /**
      * The model state
      *
-     * @var  \Joomla\CMS\Object\CMSObject
+     * @var    \Joomla\CMS\Object\CMSObject
      */
     protected $state;
 
@@ -39,43 +37,30 @@ class FixassetsViewDashboard extends HtmlView
      */
     public function display($tpl = null)
     {
-        // Add the CSS file
-        $wa = $this->document->getWebAssetManager();
-        $wa->registerAndUseStyle('com_fixassets.dashboard', 'administrator/components/com_fixassets/assets/css/dashboard.css');
-        
-        // Add body class
-        Factory::getApplication()->getDocument()->setHtml5(true);
-        Factory::getApplication()->input->set('hidemainmenu', true);
-        
         // Get data from the model
-        $this->items = $this->get('Items');
-        $this->pagination = $this->get('Pagination');
         $this->state = $this->get('State');
+        
+        // Get an instance of the model
+        $this->setModel($this->getModel('Dashboard', 'Administrator'), true);
 
-        // Check for errors.
+        // Check for errors
         if (count($errors = $this->get('Errors')))
         {
-            throw new Exception(implode("\n", $errors), 500);
+            throw new \Exception(implode("\n", $errors), 500);
         }
 
         $this->addToolbar();
-        
-        return parent::display($tpl);
+
+        parent::display($tpl);
     }
 
     /**
-     * Add the page title and toolbar.
+     * Add the page title and toolbar
      *
      * @return  void
      */
     protected function addToolbar()
     {
-        ToolbarHelper::title(Text::_('COM_FIXASSETS_MANAGER'), 'puzzle');
-
-        // Add toolbar buttons
-        if (Factory::getUser()->authorise('core.admin', 'com_fixassets'))
-        {
-            ToolbarHelper::preferences('com_fixassets');
-        }
+        ToolbarHelper::title(Text::_('COM_FIXASSETS_DASHBOARD_TITLE'), 'dashboard');
     }
 }

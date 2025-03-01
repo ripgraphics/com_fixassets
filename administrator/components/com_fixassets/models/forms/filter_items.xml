@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="filter">
+        <field
+            name="search"
+            type="text"
+            label="COM_FIXASSETS_FILTER_SEARCH"
+            description="COM_FIXASSETS_FILTER_SEARCH_DESC"
+        />
+        <field
+            name="state"
+            type="list"
+            label="COM_FIXASSETS_FILTER_STATE"
+            description="COM_FIXASSETS_FILTER_STATE_DESC"
+            default=""
+        >
+            <option value="">JALL</option>
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+        </field>
+    </fieldset>
+</form>

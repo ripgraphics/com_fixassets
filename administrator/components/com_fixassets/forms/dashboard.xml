@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="RipGraphics\Component\Fixassets\Administrator\Field">
+    <fieldset name="statistics" label="COM_FIXASSETS_DASHBOARD_STATISTICS">
+        <field
+            name="total_items"
+            type="number"
+            label="COM_FIXASSETS_DASHBOARD_TOTAL_ITEMS"
+            class="readonly"
+            readonly="true"
+            default="0"
+        />
+
+        <field
+            name="published_items"
+            type="number"
+            label="COM_FIXASSETS_DASHBOARD_PUBLISHED_ITEMS"
+            class="readonly"
+            readonly="true"
+            default="0"
+        />
+
+        <field
+            name="unpublished_items"
+            type="number"
+            label="COM_FIXASSETS_DASHBOARD_UNPUBLISHED_ITEMS"
+            class="readonly"
+            readonly="true"
+            default="0"
+        />
+
+        <field
+            name="archived_items"
+            type="number"
+            label="COM_FIXASSETS_DASHBOARD_ARCHIVED_ITEMS"
+            class="readonly"
+            readonly="true"
+            default="0"
+        />
+
+        <field
+            name="trashed_items"
+            type="number"
+            label="COM_FIXASSETS_DASHBOARD_TRASHED_ITEMS"
+            class="readonly"
+            readonly="true"
+            default="0"
+        />
+    </fieldset>
+</form>

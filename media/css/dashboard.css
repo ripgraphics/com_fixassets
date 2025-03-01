@@ -1,0 +1,82 @@
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_fixassets
+ *
+ * @copyright   Copyright (C) 2023 RIP Graphics. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+/* Dashboard Layout */
+.com-fixassets {
+    display: flex;
+    min-height: 100vh;
+}
+
+.fixassets-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.fixassets-sidebar {
+    width: 250px;
+    background-color: var(--template-bg-light);
+    border-right: 1px solid var(--template-bg-dark-7);
+    padding: 1rem;
+    transition: width 0.3s ease;
+}
+
+.fixassets-sidebar.collapsed {
+    width: 60px;
+}
+
+.fixassets-sidebar .nav-link {
+    color: var(--template-text-dark);
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fixassets-sidebar .nav-link:hover,
+.fixassets-sidebar .nav-link.active {
+    color: var(--template-link-color);
+    background-color: var(--template-bg-dark-3);
+}
+
+.fixassets-dashboard {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    padding: 1rem;
+}
+
+.dashboard-card {
+    background: var(--template-bg-light);
+}
+
+.dashboard-stat {
+    /* Add any additional styles for dashboard statistics here */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .fixassets-sidebar {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--template-bg-dark-7);
+    }
+
+    .fixassets-sidebar.collapsed {
+        width: 100%;
+    }
+
+    .fixassets-dashboard {
+        grid-template-columns: 1fr;
+    }
+}

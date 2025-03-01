@@ -1,49 +1,67 @@
 <?php
-defined('_JEXEC') or die;
+declare(strict_types=1);
+
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_fixassets
+ *
+ * @copyright   Copyright (C) 2023 RIP Graphics. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+namespace RipGraphics\Component\Fixassets\Administrator\Helper;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\HTML\Helpers\Sidebar;
 
-class FixassetsHelper
+/**
+ * Helper class for Fixassets component
+ *
+ * @since  1.0.0
+ */
+class FixAssetsHelper
 {
-    public static function addSubmenu($vName)
+    /**
+     * Method to get a list of items
+     *
+     * @return  array  List of items
+     *
+     * @since   1.0.0
+     */
+    public static function getItems(): array
     {
-        Sidebar::addEntry(
-            Text::_('COM_FIXASSETS_MENU_DASHBOARD'),
-            'index.php?option=com_fixassets&view=fixassets',
-            $vName === 'fixassets'
-        );
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('*')
+            ->from($db->quoteName('#__fixassets_items'));
 
-        Sidebar::addEntry(
-            Text::_('COM_FIXASSETS_MENU_ITEMS'),
-            'index.php?option=com_fixassets&view=items',
-            $vName === 'items'
-        );
+        $db->setQuery($query);
+
+        return $db->loadObjectList();
     }
 
-    public static function getActions($categoryId = 0)
+    /**
+     * Method to get a specific item by ID
+     *
+     * @param   int  $id  The ID of the item
+     *
+     * @return  object|null  The item object or null if not found
+     *
+     * @since   1.0.0
+     */
+    public static function getItem(int $id): ?object
     {
-        $user = Factory::getUser();
-        $result = new \Joomla\CMS\Object\CMSObject;
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('*')
+            ->from($db->quoteName('#__fixassets_items'))
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
 
-        $assetName = 'com_fixassets';
+        $db->setQuery($query);
 
-        if ($categoryId)
-        {
-            $assetName .= '.category.' . (int) $categoryId;
-        }
-
-        $actions = array(
-            'core.admin', 'core.manage', 'core.create', 'core.edit',
-            'core.edit.own', 'core.edit.state', 'core.delete'
-        );
-
-        foreach ($actions as $action)
-        {
-            $result->set($action, $user->authorise($action, $assetName));
-        }
-
-        return $result;
+        return $db->loadObject();
     }
 }

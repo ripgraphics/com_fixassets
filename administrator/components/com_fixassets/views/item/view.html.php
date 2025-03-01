@@ -1,63 +1,101 @@
 <?php
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_fixassets
+ *
+ * @copyright   Copyright (C) 2023 RIP Graphics. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+namespace RipGraphics\Component\Fixassets\Administrator\View\Item;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
-use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
-class FixassetsViewItem extends HtmlView
+/**
+ * View to edit an item
+ *
+ * @since  1.0.0
+ */
+class HtmlView extends BaseHtmlView
 {
+    /**
+     * The form object
+     *
+     * @var  \Joomla\CMS\Form\Form
+     */
     protected $form;
-    protected $item;
-    protected $state;
-    protected $type;
 
+    /**
+     * The active item
+     *
+     * @var  object
+     */
+    protected $item;
+
+    /**
+     * The model state
+     *
+     * @var  object
+     */
+    protected $state;
+
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  The name of the template file to parse
+     *
+     * @return  void
+     */
     public function display($tpl = null)
     {
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
         $this->state = $this->get('State');
-        $this->type = Factory::getApplication()->input->get('type', 'articles');
-
-        // Check for errors.
-        if (count($errors = $this->get('Errors')))
-        {
-            throw new Exception(implode("\n", $errors), 500);
-        }
 
         $this->addToolbar();
 
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 
+    /**
+     * Add the page title and toolbar
+     *
+     * @return  void
+     */
     protected function addToolbar()
     {
         Factory::getApplication()->input->set('hidemainmenu', true);
 
-        $user = Factory::getApplication()->getIdentity();
         $isNew = ($this->item->id == 0);
-
-        // Convert plural type to singular for the title
-        $type = rtrim($this->type, 's');
-        $type = strtoupper($type);
+        $canDo = ContentHelper::getActions('com_fixassets');
 
         ToolbarHelper::title(
-            Text::_('COM_FIXASSETS_' . ($isNew ? 'ADD_' : 'EDIT_') . $type),
-            'pencil-2 article-add'
+            Text::_('COM_FIXASSETS_' . ($isNew ? 'ADD_ITEM' : 'EDIT_ITEM')),
+            'puzzle'
         );
 
-        ToolbarHelper::apply('item.apply');
-        ToolbarHelper::save('item.save');
+        if ($canDo->get('core.edit') || $canDo->get('core.create'))
+        {
+            ToolbarHelper::apply('item.apply');
+            ToolbarHelper::save('item.save');
+        }
 
-        if (empty($this->item->id))
+        if ($canDo->get('core.create'))
         {
-            ToolbarHelper::cancel('item.cancel');
+            ToolbarHelper::save2new('item.save2new');
         }
-        else
+
+        if (!$isNew && $canDo->get('core.create'))
         {
-            ToolbarHelper::cancel('item.cancel', 'JTOOLBAR_CLOSE');
+            ToolbarHelper::save2copy('item.save2copy');
         }
+
+        ToolbarHelper::cancel('item.cancel', 'JTOOLBAR_CLOSE');
     }
 }

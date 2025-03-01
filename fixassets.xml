@@ -2,7 +2,7 @@
 <extension type="component" method="upgrade">
     <name>COM_FIXASSETS</name>
     <version>1.0.3</version>
-    <creationDate>02-24-2025</creationDate>
+    <creationDate>2025-02-24</creationDate>
     <author>RIP Graphics</author>
     <authorEmail>info@ripgraphics.com</authorEmail>
     <authorUrl>https://ripgraphics.com</authorUrl>
@@ -10,28 +10,58 @@
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <description>COM_FIXASSETS_DESC</description>
 
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+
+    <media destination="com_fixassets" folder="media">
+        <filename>joomla.asset.json</filename>
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
+
     <administration>
-        <menu img="class:puzzle">COM_FIXASSETS</menu>
-        <submenu>
-            <menu link="option=com_fixassets&amp;view=fixassets" view="fixassets" img="class:puzzle" alt="Fixassets/Dashboard">COM_FIXASSETS_MENU_DASHBOARD</menu>
-            <menu link="option=com_fixassets&amp;view=items" view="items" img="class:list" alt="Fixassets/Items">COM_FIXASSETS_MENU_ITEMS</menu>
-        </submenu>
+        <menu img="class:puzzle" link="option=com_fixassets&amp;view=dashboard">COM_FIXASSETS</menu>
         <files folder="administrator/components/com_fixassets">
             <filename>fixassets.php</filename>
             <filename>controller.php</filename>
             <filename>access.xml</filename>
             <filename>config.xml</filename>
             <folder>controllers</folder>
-            <folder>models</folder>
-            <folder>views</folder>
-            <folder>tables</folder>
-            <folder>helpers</folder>
             <folder>forms</folder>
-            <folder>assets</folder>
+            <folder>helpers</folder>
+            <folder>layouts</folder>
+            <folder>models</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+            <folder>src</folder>
+            <folder>tables</folder>
+            <folder>tmpl</folder>
+            <folder>views</folder>
         </files>
         <languages folder="administrator/language">
             <language tag="en-GB">en-GB/en-GB.com_fixassets.ini</language>
             <language tag="en-GB">en-GB/en-GB.com_fixassets.sys.ini</language>
         </languages>
     </administration>
+
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <api>
+        <files folder="api">
+            <folder>src</folder>
+        </files>
+    </api>
 </extension>

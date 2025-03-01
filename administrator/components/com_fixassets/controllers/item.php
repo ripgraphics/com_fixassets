@@ -1,31 +1,42 @@
 <?php
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_fixassets
+ *
+ * @copyright   Copyright (C) 2023 RIP Graphics. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+namespace RipGraphics\Component\Fixassets\Administrator\Controller;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
 
-class FixassetsControllerItem extends FormController
+/**
+ * Controller for a single item
+ *
+ * @since  1.0.0
+ */
+class ItemController extends FormController
 {
-    protected $text_prefix = 'COM_FIXASSETS_ITEM';
-
-    public function getModel($name = 'Item', $prefix = 'FixassetsModel', $config = array('ignore_request' => true))
+    /**
+     * Method to run batch operations.
+     *
+     * @param   object  $model  The model.
+     *
+     * @return  boolean  True if successful, false otherwise and internal error is set.
+     *
+     * @since   1.0.0
+     */
+    public function batch($model = null)
     {
-        return parent::getModel($name, $prefix, $config);
-    }
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-    public function edit($key = null, $urlVar = 'id')
-    {
-        $type = $this->input->get('type', 'articles');
-        $this->setRedirect(
-            Route::_('index.php?option=com_fixassets&view=item&layout=edit&id=' . $this->input->getInt('id') . '&type=' . $type, false)
-        );
-        return true;
-    }
-
-    protected function postSaveHook($model, $validData = array())
-    {
-        return;
+        return parent::batch($model);
     }
 }

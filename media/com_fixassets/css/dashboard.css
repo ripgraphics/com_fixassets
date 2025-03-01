@@ -1,0 +1,71 @@
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_fixassets
+ *
+ * @copyright   Copyright (C) 2023 RIP Graphics. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+/* Dashboard Layout */
+.com-fixassets {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.fixassets-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.fixassets-dashboard {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    width: 100%;
+}
+
+.dashboard-card {
+    width: 100%;
+}
+
+.dashboard-stat {
+    /* Add any additional styles for dashboard statistics here */
+}
+
+/* Remove default Joomla admin padding and margins */
+body.com_fixassets {
+    --joomla-sidebar-width: 0 !important;
+    --joomla-sidebar-closed-width: 0 !important;
+}
+
+body.com_fixassets #content {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+}
+
+body.com_fixassets #subhead-container,
+body.com_fixassets #sidebar-wrapper,
+body.com_fixassets .header-nav,
+body.com_fixassets .sidebar-nav,
+body.com_fixassets .wrapper:before {
+    display: none !important;
+    width: 0 !important;
+}
+
+body.com_fixassets .wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .fixassets-dashboard {
+        grid-template-columns: 1fr;
+    }
+}

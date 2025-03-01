@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="dashboard">
+        <field
+            name="total_items"
+            type="text"
+            label="COM_FIXASSETS_DASHBOARD_TOTAL_ITEMS"
+            description="COM_FIXASSETS_DASHBOARD_TOTAL_ITEMS_DESC"
+            readonly="true"
+        />
+        <field
+            name="published_items"
+            type="text"
+            label="COM_FIXASSETS_DASHBOARD_PUBLISHED_ITEMS"
+            description="COM_FIXASSETS_DASHBOARD_PUBLISHED_ITEMS_DESC"
+            readonly="true"
+        />
+        <field
+            name="unpublished_items"
+            type="text"
+            label="COM_FIXASSETS_DASHBOARD_UNPUBLISHED_ITEMS"
+            description="COM_FIXASSETS_DASHBOARD_UNPUBLISHED_ITEMS_DESC"
+            readonly="true"
+        />
+        <field
+            name="latest_items"
+            type="list"
+            label="COM_FIXASSETS_DASHBOARD_LATEST_ITEMS"
+            description="COM_FIXASSETS_DASHBOARD_LATEST_ITEMS_DESC"
+            multiple="true"
+            readonly="true"
+        />
+    </fieldset>
+</form>
