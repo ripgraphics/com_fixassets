@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -21,14 +21,9 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('com_fixassets.dashboard-css')
    ->useScript('com_fixassets.dashboard-js');
 
-// Get statistics from model
-try {
-    $model = $this->getModel('Dashboard', 'Administrator');
-    $totalItems = $model ? $model->getTotalItems() : 0;
-} catch (Exception $e) {
-    $totalItems = 0;
-    Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-}
+// Get statistics from the view
+$assets = $this->assets ?? [];
+$itemsNeedingFixesCount = $this->itemsNeedingFixesCount ?? 0;
 
 // Add custom inline styles to hide Joomla admin panels
 $wa->addInlineStyle('
@@ -78,6 +73,11 @@ $wa->addInlineStyle('
                         <span class="icon-plus" aria-hidden="true"></span>
                         <?php echo Text::_('COM_FIXASSETS_DASHBOARD_ADD_ITEM'); ?>
                     </a>
+                    <a href="<?php echo Route::_('index.php?option=com_fixassets&task=fixassets.fixAssets'); ?>" 
+                       class="btn btn-warning">
+                        <span class="icon-tools" aria-hidden="true"></span>
+                        <?php echo Text::_('COM_FIXASSETS_DASHBOARD_FIX_ASSETS'); ?>
+                    </a>
                 </div>
             </div>
         </div>
@@ -90,8 +90,12 @@ $wa->addInlineStyle('
             <div class="card-body">
                 <div class="dashboard-stats">
                     <div class="stat-card">
-                        <div class="stat-value"><?php echo $totalItems; ?></div>
-                        <div class="stat-label"><?php echo Text::_('COM_FIXASSETS_DASHBOARD_TOTAL_ITEMS'); ?></div>
+                        <div class="stat-value"><?php echo count($assets); ?></div>
+                        <div class="stat-label"><?php echo Text::_('COM_FIXASSETS_DASHBOARD_TOTAL_ASSETS'); ?></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value"><?php echo $itemsNeedingFixesCount; ?></div>
+                        <div class="stat-label"><?php echo Text::_('COM_FIXASSETS_DASHBOARD_ITEMS_NEEDING_FIXES'); ?></div>
                     </div>
                 </div>
             </div>

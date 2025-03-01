@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -29,11 +29,27 @@ if (!$app->getIdentity()->authorise('core.manage', 'com_fixassets')) {
     throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR'), 404);
 }
 
-// Load required assets
-HTMLHelper::_('bootstrap.framework');
-HTMLHelper::_('behavior.core');
+// Get the document object
+$wa = $app->getDocument()->getWebAssetManager();
 
-// Initialize the controller
-$controller = BaseController::getInstance('Fixassets');
-$controller->execute($input->get('task'));
-$controller->redirect();
+// Load required assets
+$wa->useScript('bootstrap.framework');
+$wa->useScript('core');
+
+try {
+    // Initialize the controller
+    $controllerClass = 'RipGraphics\\Component\\Fixassets\\Administrator\\Controller\\DisplayController';
+    
+    if (!class_exists($controllerClass)) {
+        // Fall back to legacy controller naming as backup
+        $controller = BaseController::getInstance('Fixassets');
+    } else {
+        $controller = new $controllerClass();
+    }
+    
+    $controller->execute($input->get('task'));
+    $controller->redirect();
+} catch (\Exception $e) {
+    $app->enqueueMessage($e->getMessage(), 'error');
+    $app->redirect('index.php');
+}

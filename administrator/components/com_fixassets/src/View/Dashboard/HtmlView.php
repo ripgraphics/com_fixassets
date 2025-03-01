@@ -4,10 +4,13 @@ declare(strict_types=1);
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_fixassets
+ *
+ * @copyright   Copyright (C) 2023 RIP Graphics. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 namespace RipGraphics\Component\Fixassets\Administrator\View\Dashboard;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -21,6 +24,22 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class HtmlView extends BaseHtmlView
 {
+    /**
+     * The assets data
+     *
+     * @var    array
+     * @since  1.0.0
+     */
+    protected $assets = [];
+
+    /**
+     * Count of items needing fixes
+     *
+     * @var    int
+     * @since  1.0.0
+     */
+    protected $itemsNeedingFixesCount = 0;
+
     /**
      * Method to add the page title and toolbar.
      *
@@ -50,6 +69,7 @@ class HtmlView extends BaseHtmlView
     {
         // Get the assets data from the model
         $this->assets = $this->get('Assets');
+        $this->itemsNeedingFixesCount = $this->get('ItemsNeedingFixesCount');
 
         // Check for errors
         if (count($errors = $this->get('Errors'))) {
